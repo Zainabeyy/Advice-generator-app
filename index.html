@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+    <title>Advice generator app</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
+      * {
+        padding: 0px;
+        margin: 0px;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Manrope", sans-serif;
+        background-color: #1f2632;
+        padding: 1rem;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .container {
+        background-color: #323a49;
+        text-align: center;
+        padding: 2rem 1rem;
+        border-radius: 1rem;
+        position: relative;
+        max-width: 473px;
+      }
+      h1 {
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.2rem;
+        color: #52ffa8;
+        text-transform: uppercase;
+        margin: 0.5rem 0rem 1.5rem;
+      }
+      q {
+        font-size: 1.65rem;
+        font-weight: 700;
+        color: #cee3e9;
+      }
+      img#divider {
+        width: 90%;
+        height: inherit;
+        margin: 1.4rem 0rem;
+      }
+      .dice img {
+        padding: 1rem;
+      }
+      .dice {
+        background-color: #52ffa8;
+        border: none;
+        width: 56px;
+        height: 56px;
+        border-radius: 1.7rem;
+        position: absolute;
+        bottom: -1.7rem;
+        left: 42%;
+      }
+      .dice:hover {
+        box-shadow: 0px 0px 30px 10px #52ffa98c;
+      }
+      @media only screen and (min-width: 488px) {
+        .dice {
+          left: 44%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <h1 id="advice-no">Advice # 0</h1>
+        <q id="advice"> Click the Dice for a piece of advice.</q>
+        <img
+          id="divider"
+          src="images/pattern-divider-desktop.svg"
+          alt="divider"
+          srcset="images/pattern-divider-mobile.svg 800w"
+        />
+        <button class="dice">
+          <img src="images/icon-dice.svg" alt="dice" />
+        </button>
+      </div>
+    </div>
+    <script>
+      const adviceNo = document.getElementById("advice-no");
+      const Advice = document.getElementById("advice");
+      const dicebutton = document.querySelector(".dice");
+      dicebutton.addEventListener("click", function () {
+        console.log("button clicked");
+        fetch("	https://api.adviceslip.com/advice")
+          .then((response) => response.json())
+          .then((data) => {
+            adviceNo.textContent = `Advice # ${data.slip.id}`;
+            Advice.textContent = data.slip.advice;
+          })
+          .catch((error) => console.error(error));
+      });
+    </script>
+  </body>
+</html>
